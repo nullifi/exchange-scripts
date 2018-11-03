@@ -4,13 +4,23 @@
 
 <#
 .Synopsis
-   Short description
+   Start, Stop, Check maintenance mode on Exchange 2016 DAG node
 .DESCRIPTION
-   Long description
+   Start, Stop, Check maintenance mode on Exchange 2016 DAG node
 .EXAMPLE
-   Example of how to use this cmdlet
+   To start maintenance:
+   Set-DagServerMaintenance -Maintenance Start -Server EX2016-01 -DAG EX2016-DAG
 .EXAMPLE
-   Another example of how to use this cmdlet
+   To stop maintenance:
+   Set-DagServerMaintenance -Maintenance Stop -Server EX2016-01 -DAG EX2016-DAG
+.EXAMPLE
+   Check mode:
+   Set-DagServerMaintenance -Maintenance Check -Server EX2016-01 -DAG EX2016-DAG
+.EXAMPLE
+   Short mode (put your DAG name in default param value, run on Exchange node)
+   Set-DagServerMaintenance Start
+   Set-DagServerMaintenance Stop
+   Set-DagServerMaintenance Check
 #>
 
 function Set-DagServerMaintenance {
@@ -20,15 +30,15 @@ function Set-DagServerMaintenance {
         [Parameter(Mandatory = $true)]
         [ValidateSet("Start", "Stop", "Check")]
         [string]
-        $Maintenance,
+        $Maintenance, # use TAB to swich between modes
 
         [Parameter(Mandatory = $false)]
         [string]
-        $Server = $env:COMPUTERNAME,
+        $Server = $env:COMPUTERNAME, # no need to specify EX server if running on EX node
 
         [Parameter(Mandatory = $false)]
         [string]
-        $DAG = "A-DAG"
+        $DAG = "DAG" # set to your DAG name (if you're lucky one)
     )
 
     Begin {
